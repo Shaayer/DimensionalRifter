@@ -1,0 +1,11 @@
+ea4bc82a6ad023ab7ee23ee620429895
+::res://::1728874153
+death_zone.gd::GDScript::-1::1728696246::0::1::::<>Area2D<>::
+death_zone.tscn::PackedScene::4864370029788575437::1728696311::0::1::::<><>::res://death_zone.gd
+export_presets.cfg::TextFile::-1::1728696322::0::1::::<><>::
+icon.svg::CompressedTexture2D::6330446620979394856::1728696333::1728696446::1::::<><>::
+javelin.tscn::PackedScene::4457407042589988070::1728860487::0::1::::<><>::uid://cwgrsb105olam::::res://icon.svg
+player.tscn::PackedScene::5503193141159216915::1728860487::0::1::::<><>::res://player_object.gd<>uid://cwgrsb105olam::::res://icon.svg
+player_object.gd::GDScript::-1::1728853409::0::1::::<>CharacterBody2D<>::
+world.gd::GDScript::-1::1728745515::0::1::::<>Node2D<>::
+world.tscn::PackedScene::8465407945566312419::1728874140::0::1::::<><>::uid://cwgrsb105olam::::res://icon.svg<>uid://ckn1101tsl1rr::::res://player.tscn<>uid://b4rg3whxmpsre::::res://javelin.tscn

@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=3 uid="uid://ckn1101tsl1rr"]
+
+[ext_resource type="Script" path="res://player_object.gd" id="1_pkhdi"]
+[ext_resource type="Texture2D" uid="uid://cwgrsb105olam" path="res://icon.svg" id="2_xytht"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_my46a"]
+atlas = ExtResource("2_xytht")
+region = Rect2(0, 64, 128, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0yudo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_my46a")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yjeye"]
+radius = 84.0
+height = 506.0
+
+[node name="player_object" type="CharacterBody2D"]
+scale = Vector2(0.5, 1)
+script = ExtResource("1_pkhdi")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(2, 1.3125)
+sprite_frames = SubResource("SpriteFrames_0yudo")
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+scale = Vector2(0.25, 0.5)
+shape = SubResource("CapsuleShape2D_yjeye")
+metadata/_edit_lock_ = true

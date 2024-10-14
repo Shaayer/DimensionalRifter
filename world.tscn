@@ -1,0 +1,64 @@
+[gd_scene load_steps=7 format=3 uid="uid://dsuybdb1ds8ip"]
+
+[ext_resource type="Texture2D" uid="uid://cwgrsb105olam" path="res://icon.svg" id="1_pwh6w"]
+[ext_resource type="PackedScene" uid="uid://ckn1101tsl1rr" path="res://player.tscn" id="2_kfsae"]
+[ext_resource type="PackedScene" uid="uid://b4rg3whxmpsre" path="res://javelin.tscn" id="4_6bp77"]
+
+[sub_resource type="GDScript" id="GDScript_vu5n4"]
+script/source = "extends Node2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+	
+func _input(event):
+	if event is InputEventMouseButton:
+		print(\"Mouse Click/Unclick at: \", event.position)
+
+func move(target, javelin, speed):
+	var distance=abs(target.global_position - javelin.global_position)
+	var distanceX=target.x-javelin.x
+	var distanceY=target.y-javelin.y
+	var quotient=speed/distance 
+	var changeX=distanceX*quotient
+	var changeY=distanceY*quotient
+	var rotate=atan(changeY/changeX)
+	return [changeX, changeY, rotate]
+"
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mvae0"]
+texture = ExtResource("1_pwh6w")
+texture_region_size = Vector2i(128, 64)
+55:98/0 = 0
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -32, 64, -32, 64, 32, -64, 32)
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -32, 64, -32, 64, 32, -64, 32)
+
+[sub_resource type="TileSet" id="TileSet_wcvnd"]
+tile_size = Vector2i(128, 64)
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_mvae0")
+
+[node name="World" type="Node2D"]
+script = SubResource("GDScript_vu5n4")
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_wcvnd")
+format = 2
+layer_0/tile_data = PackedInt32Array(0, 0, 0, 65535, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 65534, 0, 0, 65533, 0, 0, 65532, 0, 0, 65531, 0, 0, 65530, 0, 0, 65529, 0, 0, 65528, 0, 0, 131064, 0, 0, 196599, 0, 0, 196598, 0, 0, 196597, 0, 0, 196600, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 65543, 0, 0, 65544, 0, 0, 131080, 0, 0, 131081, 0, 0, 131082, 0, 0, 131083, 0, 0, 131084, 0, 0, 131086, 0, 0, 17, 0, 0, 18, 0, 0, 20, 0, 0, 21, 0, 0, 22, 0, 0, 23, 0, 0, 26, 0, 0, 27, 0, 0, 28, 0, 0, 29, 0, 0, -327653, 0, 0, -327654, 0, 0, -327655, 0, 0, -393194, 0, 0, -393195, 0, 0, -393196, 0, 0, -393197, 0, 0, -196578, 0, 0, -524271, 0, 0, -524272, 0, 0, -524273, 0, 0, -524274, 0, 0, -524275, 0, 0, -655348, 0, 0, -655349, 0, 0, -655350, 0, 0, -655351, 0, 0, -524280, 0, 0, -524281, 0, 0, -524282, 0, 0, -524283, 0, 0, -524284, 0, 0, -327677, 0, 0, -327678, 0, 0, -327679, 0, 0, -327680, 0, 0, -262145, 0, 0, -262146, 0, 0, -262147, 0, 0, -262148, 0, 0, -262149, 0, 0, -262150, 0, 0, -262151, 0, 0, -262152, 0, 0, -262153, 0, 0, -262154, 0, 0, -262155, 0, 0, -262156, 0, 0, -262157, 0, 0, -327676, 0, 0, -327675, 0, 0, -393211, 0, 1, -458747, 0, 1, 196596, 0, 0, 196595, 0, 0, 196594, 0, 0, 196593, 0, 0, 196592, 0, 0, 196591, 0, 0, 196590, 0, 0, 196589, 0, 0, -262158, 0, 0, -327695, 0, 0, -327696, 0, 0, -327697, 0, 0, -393234, 0, 0, -393235, 0, 0, -393236, 0, 0, -393237, 0, 0, -589843, 0, 0, -589842, 0, 0, -589841, 0, 0, -589840, 0, 0, -655374, 0, 0, -655371, 0, 0, -655369, 0, 0, -655366, 0, 0, -655365, 0, 0, -655364, 0, 0, -655363, 0, 0, -786433, 0, 0, -851968, 0, 0, -851967, 0, 0, -851966, 0, 0)
+
+[node name="player_object" parent="." instance=ExtResource("2_kfsae")]
+position = Vector2(-3, -45)
+
+[node name="Javelin" parent="player_object" instance=ExtResource("4_6bp77")]
+scale = Vector2(2, 0.1875)
+
+[node name="Camera2D" type="Camera2D" parent="player_object"]
+metadata/_edit_lock_ = true

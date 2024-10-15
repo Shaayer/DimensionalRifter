@@ -5,9 +5,10 @@
 [sub_resource type="GDScript" id="GDScript_2qjke"]
 script/source = "extends CharacterBody2D
 
-var speed=5
+var speed=12
 var currentTargetX=0
 var currentTargetY=0
+var active = true
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
@@ -15,65 +16,27 @@ var mousePosition;
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if currentTargetX != 0 and currentTargetY !=0:
-		var m=move(currentTargetX, currentTargetY, global_position, speed)
-		global_position.x+=m[0]
-		global_position.y+=m[1]
-		#rotation=m[2]
-	
+	if active:
+		move()
 	
 func _input(event):
 	if event is InputEventMouseButton:
-		print(\"Mouse Click/Unclick at: \", event.position)
+		#print(\"Mouse Click/Unclick at: \", event.position)
 		var mouse=get_global_mouse_position()
 		currentTargetX=mouse.x
 		currentTargetY=mouse.y
-		#position=mouse
-		#var distanceX=abs(currentTargetX-mouse.x)
-		#var distanceY=abs(currentTargetY-mouse.y)
-		#var slope=distanceY/distanceX
-		#var newDistanceX=distanceX*20
-		#var newDistanceY=distanceY*20*slope
-		#if currentTargetX<position.x:
-			#currentTargetX-=newDistanceX
-		#if currentTargetX>position.x:
-			#currentTargetX+=newDistanceX
-		#if currentTargetY>position.y:
-			#currentTargetY+=newDistanceY
-		#if currentTargetY<position.y:
-			#currentTargetY-=newDistanceY
-		#if currentTargetX==position.x:
-			#currentTargetX=-9999999999999999999
-		#if currentTargetY==position.y:
-			#currentTargetY=-9999999999999999999
+		
 
-func move(targetX, targetY, javelin, speed):
-	#var num1=abs(targetX-javelin.x)
-	#var num2=abs(targetY-javelin.y)
-	#var distance=sqrt(num1**2+num2**2)
-	#var distanceX=targetX-javelin.x
-	#var distanceY=targetY-javelin.y
-	#var quotient=speed/distance 
-	#var changeX=distanceX*quotient
-	#var changeY=distanceY*quotient
-	#var rotate=atan(changeY/changeX)
-	#return [changeX, changeY, rotate]
-	
-	
-	#distance=abs(Vector2(targetX,targetY) - Vector2(javelin.x,javelin.y))
-	var distance=Vector2(targetX,targetY).distance_to(Vector2(javelin.x,javelin.y))
-	var distanceX=abs(targetX-javelin.x)
-	var distanceY=abs(targetY - javelin.y)
-	var quotient=speed/distance
-	if targetX<javelin.x:
-		distanceX=-distanceX
-	if targetY<javelin.y:
-		distanceY=-distanceY
-	#return[distanceX,distanceY,PI]
-	var changeX=distanceX*quotient
-	var changeY=distanceY*quotient
-	look_at(Vector2(targetX,targetY))
-	return [changeX, changeY]
+func move():
+	var javelin = global_position
+	var distanceX = currentTargetX-javelin.x
+	var distanceY = currentTargetY-javelin.y
+	var hypotenuse = sqrt(pow(distanceX,2)+pow(distanceY,2))
+	rotation = atan((distanceY)/(distanceX))
+	global_position.x+=distanceX/hypotenuse*speed
+	global_position.y+=distanceY/hypotenuse*speed
+	currentTargetX+=distanceX/hypotenuse*speed
+	currentTargetY+=distanceY/hypotenuse*speed
 "
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2xq7p"]
